@@ -5,7 +5,6 @@
             [twitter.api.restful :as twitter]
             [twitter.oauth :as twitter-oauth]
             [environ.core :refer [env]]
-            [postal.core :refer [send-message]]
             [ring.util.http-response :as respond])
   (:import
    (twitter.callbacks.protocols SyncSingleCallback)))
