@@ -9,10 +9,10 @@
   (:import
    (twitter.callbacks.protocols SyncSingleCallback)))
 
-(def my-creds (twitter-oauth/make-oauth-creds (env :app-consumer-key)
-                                              (env :app-consumer-secret)
-                                              (env :user-access-token)
-                                              (env :user-access-secret)))
+(def my-creds (twitter-oauth/make-oauth-creds (env :steve-castle-app-consumer-key)
+                                              (env :steve-castle-app-consumer-secret)
+                                              (env :steve-castle-user-access-token)
+                                              (env :steve-castle-user-access-secret)))
 
 (defn generic-response [screen-name]
   (let [responses [(str "@" screen-name " We can dance! Dun dun dun dun dun dunun dun dun...")
@@ -52,10 +52,10 @@
     (post-status (generic-response (:screen-name mention)))))
 
 (defn respond-to-mention-response []
-  (let [last-id-responded-to  (query/get-last-responded-to-status-id query/db)
+  (let [last-id-responded-to  (query/get-last-responded-to-status-id query/db {:username "SteveCastleCEO"})
         mentions              (get-mentions (:status_id last-id-responded-to))
         last-id-from-mentions (apply max (map :id mentions))]
-    (query/update-last-responded-to-status-id! query/db {:status_id last-id-from-mentions})
+    (query/update-last-responded-to-status-id! query/db {:status_id last-id-from-mentions :username "SteveCastleCEO"})
     (doseq [mention mentions]
       (respond-to-mention mention))
     (respond/ok {:message "The response has been sent"})))

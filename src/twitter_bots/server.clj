@@ -6,7 +6,7 @@
 (defn create-tables
   "Create database tables if they don't exist"
   []
-  (query/create-status-responded-to-by-steve-castle-table-if-not-exists! query/db))
+  (query/create-status-responded-to-table-if-not-exists! query/db))
 
 (defn -main [port]
   (create-tables)
