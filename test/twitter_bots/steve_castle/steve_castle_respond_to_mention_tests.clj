@@ -20,9 +20,4 @@
                          "@Jarrod passing tests? passing tests?! You're not looking at the big picture!"]]
       (dotimes [n 50]
         (let [response (unit-test/custom-response "Jarrod" "I'm worried about passing tests")]
-          (is (= true (some #(= response %) valid-options)))))))
-
-  (testing "test extract-mentioned-values-from-status returns expected expected-output"
-    (let [input           {:id 1 :text "You may already be a winner" :user {:screen_name "Jarrod" :misc "stuff"}}
-          expected-output {:id 1 :screen-name "Jarrod" :text "You may already be a winner"}]
-      (is (= expected-output (unit-test/extract-mentioned-values-from-status input))))))
+          (is (= true (some #(= response %) valid-options))))))))

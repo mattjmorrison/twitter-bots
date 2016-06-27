@@ -1,18 +1,15 @@
 (ns twitter-bots.route-functions.steve-castle.respond-to-mention
   (:require [twitter-bots.queries.query-defs :as query]
             [clojure.string :as str]
-            [twitter.callbacks.handlers :as twitter-handler]
-            [twitter.api.restful :as twitter]
+            [twitter-bots.route-functions.general-functions :as general]
             [twitter.oauth :as twitter-oauth]
             [environ.core :refer [env]]
-            [ring.util.http-response :as respond])
-  (:import
-   (twitter.callbacks.protocols SyncSingleCallback)))
+            [ring.util.http-response :as respond]))
 
-(def my-creds (twitter-oauth/make-oauth-creds (env :steve-castle-app-consumer-key)
-                                              (env :steve-castle-app-consumer-secret)
-                                              (env :steve-castle-user-access-token)
-                                              (env :steve-castle-user-access-secret)))
+(def bot-creds (twitter-oauth/make-oauth-creds (env :steve-castle-app-consumer-key)
+                                               (env :steve-castle-app-consumer-secret)
+                                               (env :steve-castle-user-access-token)
+                                               (env :steve-castle-user-access-secret)))
 
 (defn generic-response [screen-name]
   (let [responses [(str "@" screen-name " We can dance! Dun dun dun dun dun dunun dun dun...")
@@ -29,31 +26,14 @@
                    (str "@" screen-name " " subject "? " subject "?! You're not looking at the big picture!")]]
   (rand-nth responses)))
 
-(defn extract-mentioned-values-from-status [status]
-  (let [screen-name (get-in status [:user :screen_name])
-        text        (:text status)
-        id          (:id status)]
-    {:id id :screen-name screen-name :text text}))
-
-(defn get-mentions [last-id-responded-to]
-  (let [statuses (twitter/statuses-mentions-timeline :oauth-creds my-creds
-                                                     :params      {:since_id last-id-responded-to}
-                                                     :callbacks   (SyncSingleCallback. twitter-handler/response-return-body
-                                                                                       twitter-handler/response-throw-error
-                                                                                       twitter-handler/exception-rethrow))]
-    (map extract-mentioned-values-from-status statuses)))
-
-(defn post-status [content]
-  (twitter/statuses-update :oauth-creds my-creds :params {:status content}))
-
 (defn respond-to-mention [mention]
   (if (str/includes? (:text mention) "worried about")
-    (post-status (custom-response (:screen-name mention) (:text mention)))
-    (post-status (generic-response (:screen-name mention)))))
+    (general/post-status (custom-response (:screen-name mention) (:text mention)) bot-creds)
+    (general/post-status (generic-response (:screen-name mention)) bot-creds)))
 
 (defn respond-to-mention-response []
   (let [last-id-responded-to  (query/get-last-responded-to-status-id query/db {:username "SteveCastleCEO"})
-        mentions              (get-mentions (:status_id last-id-responded-to))
+        mentions              (general/get-mentions (:status_id last-id-responded-to) bot-creds)
         last-id-from-mentions (apply max (map :id mentions))]
     (query/update-last-responded-to-status-id! query/db {:status_id last-id-from-mentions :username "SteveCastleCEO"})
     (doseq [mention mentions]

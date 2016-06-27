@@ -1,6 +1,7 @@
 (ns twitter-bots.handler
   (:require [compojure.api.sweet :refer :all]
             [twitter-bots.routes.steve-castle :refer :all]
+            [twitter-bots.routes.paper-rock-bot :refer :all]
             [twitter-bots.routes.preflight :refer :all]
             [twitter-bots.middleware.cors :refer [cors-mw]]
             [ring.util.http-response :refer :all]
@@ -13,6 +14,8 @@
     :data {:info {:title "twitter-bots"
                   :version "0.0.1"}
            :tags [{:name "Preflight"     :description "Return successful response for all preflight requests"}
-                  {:name "Steve Castle"  :description "Steve Castle twitter bot"}]}}}
+                  {:name "Steve Castle"  :description "Steve Castle twitter bot"}
+                  {:name "PaperRockBot"  :description "Paper Rock twitter bot"}]}}}
   preflight-route
-  steve-castle-routes)
+  steve-castle-routes
+  paper-rock-bot-routes)

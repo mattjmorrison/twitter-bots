@@ -10,33 +10,14 @@ non-speak. He is also a life coach and powerful leadership figure. He will
 help calm your concerns if you tell him what you are "worried about" for
 example `@SteveCastleCEO I am worried about the ethics of this company`
 
-## Running locally
+<br/>
+<br/>
 
-### Add profiles.clj
+## Paper Rock Bot
 
-The project pulls sensitive information from environment variables. For local
-development you will need a `profiles.clj` in the root of the project. However,
-without the appropriate twitter api keys you will not be able to make the
-actual requests successfully. The file would look like:
+<img src="https://cloud.githubusercontent.com/assets/4416952/16397490/62815c5c-3c8a-11e6-8814-48e65a0cc77a.jpg" alt="PaperRockBot" title="PaperRockBot" align="left" />
 
-``` clojure
-{:dev-env-vars  {:env {:database-url             "postgres://bot_user:password1@127.0.0.1:5432/twitter_bots?stringtype=unspecified"
-                       :app-consumer-key         "twitterApplicationConsumerKey"
-                       :app-consumer-secret      "twitterApplicationConsumerSecret"
-                       :user-access-token        "twitterUserAccessToken"
-                       :user-access-secret       "twitterUserAccessSecretToken"}}
- :test-env-vars {:env {:database-url             "postgres://bot_user:password1@127.0.0.1:5432/twitter_bots_test?stringtype=unspecified"}}}
-```
-### Running The Server
-
-`lein run -m twitter-bots.server 3000`
-
-Then visit [http://localhost:3000/api-docs/index.html](http://localhost:3000/api-docs/index.html)
-
-### Table migrations / creation
-
-When you start the server any needed tables will be created automatically.
-
-### Running Tests
-
-`lein test`
+As the name implies the Paper Rock Bot plays games of paper rock scissors  with
+any interested twitter users. In order to play all you need to do is tweet
+`@PaperRockBot` and include the words `paper`, `rock` or `scissors`. For
+example `@PaperRockBot I choose paper`
