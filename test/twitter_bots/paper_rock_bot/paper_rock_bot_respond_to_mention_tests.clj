@@ -25,7 +25,7 @@
     (with-redefs [rand-nth        (fn [_] "rock")]
       (let [mention {:screen-name "Jarrod" :text "I choose paper"}
             result  (sut/response-to-mention mention)]
-        (is (= "@Jarrod paper beats rock you win. Current streak: 1. All time record: 5" result))))))
+        (is (= "@Jarrod paper beats rock you win. Current streak: 1. The current champ has a streak of: 5" result))))))
 
 (deftest unit-test-response-to-mention-when-user-is-winner-and-they-are-the-current-champion
   (testing "test response-to-mention when user is winner and they are the current champion"
@@ -60,7 +60,7 @@
     (with-redefs [rand-nth        (fn [_] "scissors")]
       (let [mention {:screen-name "Jarrod" :text "I choose paper"}
             result  (sut/response-to-mention mention)]
-        (is (= "@Jarrod paper is beaten by scissors you lose. Current streak: 0. All time record: 5" result))))))
+        (is (= "@Jarrod paper is beaten by scissors you lose. Current streak: 0. The current champ has a streak of: 5" result))))))
 
 (deftest unit-test-user-gets-a-tie
   (testing "test user gets a tie"
@@ -69,4 +69,4 @@
     (with-redefs [rand-nth        (fn [_] "paper")]
       (let [mention {:screen-name "Jarrod" :text "I choose paper"}
             result  (sut/response-to-mention mention)]
-        (is (= "@Jarrod paper ties with paper no winner. Current streak: 4. All time record: 5" result))))))
+        (is (= "@Jarrod paper ties with paper no winner. Current streak: 4. The current champ has a streak of: 5" result))))))

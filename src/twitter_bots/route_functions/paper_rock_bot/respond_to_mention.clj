@@ -37,10 +37,10 @@
       (= user-play nil)                      (str "@" (:screen-name mention) " Invalid Play: Try again and include the word 'paper', 'rock' or 'scissors' in your tweet.")
       (and (= winner? true) current-champ?)  (str "@" (:screen-name mention) " " user-play " beats "        bot-play " as the reigning champ that bumps your current streak to: " (:current_streak current-streak) ".")
       (and (= winner? true) new-champ?)      (str "@" (:screen-name mention) " " user-play " beats "        bot-play " raising your current streak to: " (:current_streak current-streak) ". Beating the previous champ @" (:username record))
-      (= winner? true)                       (str "@" (:screen-name mention) " " user-play " beats "        bot-play " you win. Current streak: " (:current_streak current-streak) ". All time record: " (:current_streak record))
+      (= winner? true)                       (str "@" (:screen-name mention) " " user-play " beats "        bot-play " you win. Current streak: " (:current_streak current-streak) ". The current champ has a streak of: " (:current_streak record))
       (and (= winner? false) current-champ?) (str "@" (:screen-name mention) " " user-play " is beaten by " bot-play " you lose. Which makes @" (:username new-champ-stats) " the new champion with a streak of: " (:current_streak new-champ-stats))
-      (= winner? false)                      (str "@" (:screen-name mention) " " user-play " is beaten by " bot-play " you lose. Current streak: " (:current_streak current-streak) ". All time record: " (:current_streak record))
-      (= winner? nil)                        (str "@" (:screen-name mention) " " user-play " ties with "    bot-play " no winner. Current streak: " (:current_streak current-streak) ". All time record: " (:current_streak record)))))
+      (= winner? false)                      (str "@" (:screen-name mention) " " user-play " is beaten by " bot-play " you lose. Current streak: " (:current_streak current-streak) ". The current champ has a streak of: " (:current_streak record))
+      (= winner? nil)                        (str "@" (:screen-name mention) " " user-play " ties with "    bot-play " no winner. Current streak: " (:current_streak current-streak) ". The current champ has a streak of: " (:current_streak record)))))
 
 (defn respond-to-mention-response []
   (let [last-id-responded-to  (query/get-last-responded-to-status-id query/db {:username "PaperRockBot"})
