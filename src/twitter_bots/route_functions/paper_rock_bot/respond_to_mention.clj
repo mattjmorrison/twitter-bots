@@ -47,7 +47,6 @@
         mentions              (general/get-mentions (:status_id last-id-responded-to) bot-creds)
         last-id-from-mentions (apply max (map :id mentions))]
     (query/update-last-responded-to-status-id! query/db {:status_id last-id-from-mentions :username "PaperRockBot"})
-    (query/update-last-responded-to-status-id! query/db {:status_id last-id-from-mentions :username "SteveCastleCEO"})
     (doseq [mention mentions]
       (general/post-status (response-to-mention mention) bot-creds))
     (respond/ok {:message "The response has been sent"})))
