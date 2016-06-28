@@ -10,7 +10,7 @@ WHERE username = :username;
 -- :command :insert
 -- :result :raw
 -- :doc Inserts or updates the id of the last status that has been responded to for the given user
-INSERT INTO status_responded_to(id, username, status_id)
-VALUES(1, :username, :status_id)
-ON CONFLICT(id)
+INSERT INTO status_responded_to(username, status_id)
+VALUES(:username, :status_id)
+ON CONFLICT(username)
 DO UPDATE SET status_id=:status_id;
