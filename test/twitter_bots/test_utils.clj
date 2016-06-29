@@ -3,6 +3,7 @@
 
 
 (defn create-tables [f]
+  (query/create-round-counter-table-if-not-exists! query/db)
   (query/create-paper-rock-stats-table-if-not-exists! query/db)
   (query/create-status-responded-to-table-if-not-exists! query/db)
   (f))
