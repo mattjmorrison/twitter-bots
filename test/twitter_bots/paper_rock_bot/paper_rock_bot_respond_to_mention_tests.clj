@@ -80,3 +80,93 @@
             second-result  (sut/response-to-mention mention)]
         (is (= "@Jarrod round 1 paper beats rock you win. Current streak: 1. The current champ has a streak of: 5" first-result))
         (is (= "@Jarrod round 2 paper beats rock you win. Current streak: 2. The current champ has a streak of: 5" second-result))))))
+
+(deftest unit-test-scissors-beats-paper
+  (testing "scissors beats paper"
+    (dotimes [_ 5](query/increment-users-current-streak! query/db {:username "Snake"}))
+    (dotimes [_ 4](query/increment-users-current-streak! query/db {:username "Jarrod"}))
+    (with-redefs [rand-nth        (fn [_] "scissors")]
+      (let [mention {:screen-name "Jarrod" :text "I choose paper"}
+            result  (sut/response-to-mention mention)]
+        (is (= "@Jarrod round 1 paper is beaten by scissors you lose. Current streak: 0. The current champ has a streak of: 5" result))))))
+
+(deftest unit-test-paper-beats-rock
+  (testing "paper beats rock"
+    (dotimes [_ 5](query/increment-users-current-streak! query/db {:username "Snake"}))
+    (dotimes [_ 4](query/increment-users-current-streak! query/db {:username "Jarrod"}))
+    (with-redefs [rand-nth        (fn [_] "paper")]
+      (let [mention {:screen-name "Jarrod" :text "I choose rock"}
+            result  (sut/response-to-mention mention)]
+        (is (= "@Jarrod round 1 rock is beaten by paper you lose. Current streak: 0. The current champ has a streak of: 5" result))))))
+
+(deftest unit-test-rock-beats-lizard
+  (testing "rock beats lizard"
+    (dotimes [_ 5](query/increment-users-current-streak! query/db {:username "Snake"}))
+    (dotimes [_ 4](query/increment-users-current-streak! query/db {:username "Jarrod"}))
+    (with-redefs [rand-nth        (fn [_] "rock")]
+      (let [mention {:screen-name "Jarrod" :text "I choose lizard"}
+            result  (sut/response-to-mention mention)]
+        (is (= "@Jarrod round 1 lizard is beaten by rock you lose. Current streak: 0. The current champ has a streak of: 5" result))))))
+
+(deftest unit-test-lizard-beats-spock
+  (testing "lizard beats spock"
+    (dotimes [_ 5](query/increment-users-current-streak! query/db {:username "Snake"}))
+    (dotimes [_ 4](query/increment-users-current-streak! query/db {:username "Jarrod"}))
+    (with-redefs [rand-nth        (fn [_] "lizard")]
+      (let [mention {:screen-name "Jarrod" :text "I choose spock"}
+            result  (sut/response-to-mention mention)]
+        (is (= "@Jarrod round 1 spock is beaten by lizard you lose. Current streak: 0. The current champ has a streak of: 5" result))))))
+
+(deftest unit-test-spock-beats-scissors
+  (testing "spock beats scissors"
+    (dotimes [_ 5](query/increment-users-current-streak! query/db {:username "Snake"}))
+    (dotimes [_ 4](query/increment-users-current-streak! query/db {:username "Jarrod"}))
+    (with-redefs [rand-nth        (fn [_] "spock")]
+      (let [mention {:screen-name "Jarrod" :text "I choose scissors"}
+            result  (sut/response-to-mention mention)]
+        (is (= "@Jarrod round 1 scissors is beaten by spock you lose. Current streak: 0. The current champ has a streak of: 5" result))))))
+
+(deftest unit-test-scissors-beats-lizard
+  (testing "scissors beats lizard"
+    (dotimes [_ 5](query/increment-users-current-streak! query/db {:username "Snake"}))
+    (dotimes [_ 4](query/increment-users-current-streak! query/db {:username "Jarrod"}))
+    (with-redefs [rand-nth        (fn [_] "scissors")]
+      (let [mention {:screen-name "Jarrod" :text "I choose lizard"}
+            result  (sut/response-to-mention mention)]
+        (is (= "@Jarrod round 1 lizard is beaten by scissors you lose. Current streak: 0. The current champ has a streak of: 5" result))))))
+
+(deftest unit-test-lizard-beats-paper
+  (testing "lizard beats paper"
+    (dotimes [_ 5](query/increment-users-current-streak! query/db {:username "Snake"}))
+    (dotimes [_ 4](query/increment-users-current-streak! query/db {:username "Jarrod"}))
+    (with-redefs [rand-nth        (fn [_] "lizard")]
+      (let [mention {:screen-name "Jarrod" :text "I choose paper"}
+            result  (sut/response-to-mention mention)]
+        (is (= "@Jarrod round 1 paper is beaten by lizard you lose. Current streak: 0. The current champ has a streak of: 5" result))))))
+
+(deftest unit-test-paper-beats-spock
+  (testing "paper beats spock"
+    (dotimes [_ 5](query/increment-users-current-streak! query/db {:username "Snake"}))
+    (dotimes [_ 4](query/increment-users-current-streak! query/db {:username "Jarrod"}))
+    (with-redefs [rand-nth        (fn [_] "paper")]
+      (let [mention {:screen-name "Jarrod" :text "I choose spock"}
+            result  (sut/response-to-mention mention)]
+        (is (= "@Jarrod round 1 spock is beaten by paper you lose. Current streak: 0. The current champ has a streak of: 5" result))))))
+
+(deftest unit-test-spock-beats-rock
+  (testing "spock beats rock"
+    (dotimes [_ 5](query/increment-users-current-streak! query/db {:username "Snake"}))
+    (dotimes [_ 4](query/increment-users-current-streak! query/db {:username "Jarrod"}))
+    (with-redefs [rand-nth        (fn [_] "spock")]
+      (let [mention {:screen-name "Jarrod" :text "I choose rock"}
+            result  (sut/response-to-mention mention)]
+        (is (= "@Jarrod round 1 rock is beaten by spock you lose. Current streak: 0. The current champ has a streak of: 5" result))))))
+
+(deftest unit-test-rock-beats-scissors
+  (testing "rock beats scissors"
+    (dotimes [_ 5](query/increment-users-current-streak! query/db {:username "Snake"}))
+    (dotimes [_ 4](query/increment-users-current-streak! query/db {:username "Jarrod"}))
+    (with-redefs [rand-nth        (fn [_] "rock")]
+      (let [mention {:screen-name "Jarrod" :text "I choose scissors"}
+            result  (sut/response-to-mention mention)]
+        (is (= "@Jarrod round 1 scissors is beaten by rock you lose. Current streak: 0. The current champ has a streak of: 5" result))))))

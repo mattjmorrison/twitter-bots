@@ -27,7 +27,7 @@
 (defn response-to-mention [mention]
   (let [record          (query/get-recordholder-stats query/db)
         current-champ?  (= (:username record) (:screen-name mention))
-        user-play       (first (re-find #"(?i)(\bpaper\b|\brock\b|\bscissors\b)" (:text mention)))
+        user-play       (first (re-find #"(?i)(\bpaper\b|\brock\b|\bscissors\b|\blizard\b|\bspock\b)" (:text mention)))
         bot-play        (rand-nth ["paper" "rock" "scissors"])
         winner?         (user-is-winner? user-play bot-play)
         current-streak  (update-current-streak winner? (:screen-name mention))
